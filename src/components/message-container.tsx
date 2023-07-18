@@ -1,12 +1,11 @@
 'use client';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import Message from '@/components/ui/message';
-import { SUGGESTIONS, WELCOME_MESSAGE } from '@/lib/constants';
+import { SUGGESTIONS, WELCOME_MESSAGE } from '@/config.ts/constants';
 import SendMessage from './send-message';
 import { Message as MessageType, messages } from '@/lib/messages';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useScrollIntoView } from '@mantine/hooks';
-import { i, m } from 'drizzle-orm/column.d-aa4e525d';
 
 const MessageContainer = () => {
   const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({
@@ -28,17 +27,9 @@ const MessageContainer = () => {
           prompts={SUGGESTIONS}
         />
 
-        {chatMessages?.map((m, i) => {
-          if (i === chatMessages.length - 1) {
-            return (
-              <div key={i}>
-                <Message {...m} />
-              </div>
-            );
-          } else {
-            return <Message key={i} {...m} />;
-          }
-        })}
+        {chatMessages?.map((m, i) => (
+          <Message key={i} {...m} />
+        ))}
       </ScrollArea>
       <div ref={targetRef} className="w-full">
         <SendMessage
